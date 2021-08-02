@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <title>Личный кабинет</title>
 <meta charset="utf-8" />
@@ -33,15 +34,39 @@ body{
 }
 .placeholder{
     flex: 1;
+    left: 170px;
 }
+div{
 
+    margin: 0 auto;
+    padding: 70px;
+    width: 300px;
+    align-items: center;
+    align-text: center;
+}
 </style>
 
-<script type = "text/javascript">
-document.addEventListener("DOMContentLoaded", function(){
-    let btn = document.querySelector('input[type=submit]');
+</head>
+<body>
+    <div class="placeholder"></div>
+    <form method="POST" action="/login" id="login">
+        <input type="text" name="username" />
+        <input type="password" name="password"/>
+<!--        <input type="submit" value="Войти" id="loginBtn"/>-->
+    </form>
+    <button value="MyButton" id="loginBtn">LOGIN</button>
+    <div class="placeholder" id="placeholder"></div>
+    <button value="MyButton2" id="logoutBtn">LOGOUT</button>
+    </form>
+
+<script>
+    //let btn = document.querySelector('input[type=submit]');
+    let btn = document.getElementById("loginBtn");
+    let placeholderDiv = document.getElementById("placeholder")
+
     btn.addEventListener('click', async function(event){
-        event.preventDefault();
+        //event.preventDefault();
+        console.log('hello there')
        // let username = document.querySelector('input[name=username]').value;
        // let password = document.querySelector('input[name=password]').value;
         let response = await fetch("/login",{
@@ -49,29 +74,20 @@ document.addEventListener("DOMContentLoaded", function(){
             body: new FormData(document.querySelector('form'))
         });
         let response_json = await response.json()
+        console.log(response_json)
         if (response_json.success){
             let body = document.querySelector('body');
             body.style.backgroundColor = "white";
             body.style.display = "block";
             //body.innerHTML = response_json.message;
+        } else {
+            placeholderDiv.innerHTML = 'WRONG LOGIN FORMAT'
         }
     })
-})
+
 
 </script>
-
-
-</head>
-<body>
-    <div class="placeholder"></div>
-<form method="POST" action="/login">
-    <input type="text" name="username" />
-    <input type="password" name="password"/>
-    <input  type="submit" value="Войти"/>
-</form>
-    <div class="placeholder"></div>
-
-
-
 </body>
 </html>
+
+
